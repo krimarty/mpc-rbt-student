@@ -63,6 +63,7 @@ void Message::to_json(nlohmann::json & j, const Message & m)
     {"x", m.x},
     {"y", m.y},
     {"z", m.z},
+    {"frame", m.frame},
   };
 }
 
@@ -74,6 +75,7 @@ void Message::from_json(const nlohmann::json & j, Message & m)
   j.at("x").get_to(m.x);
   j.at("y").get_to(m.y);
   j.at("z").get_to(m.z);
+  j.at("frame").get_to(m.frame);
 }
 
 bool Message::serialize(Socket::IPFrame & f, const Message & m)
