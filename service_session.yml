@@ -1,5 +1,5 @@
 name: "communication_example"
-root: <%= @settings["working_directory"]%>
+root: <%= Dir.pwd %>
 
 startup_window: monitoring
 windows:

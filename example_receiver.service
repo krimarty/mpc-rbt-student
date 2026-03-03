@@ -5,8 +5,8 @@ After = local-fs.target network-online.target
 
 [Service]
 User = martin
-WorkingDirectory = /home/martin/workspaces/mpc-rbt-student
-ExecStart = /home/martin/workspaces/mpc-rbt-student/run_receiver.sh
+WorkingDirectory = /home/martin/workspace/mpc-rbt-student
+ExecStart = /home/martin/workspace/mpc-rbt-student/run_receiver.sh
 Restart = on-failure
 RestartSec = 5
 TimeoutStopSec = 5
