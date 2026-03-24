@@ -10,5 +10,26 @@ def generate_launch_description():
 
     
     return LaunchDescription([
-
+        Node(
+            package='mpc_rbt_student',
+            executable='localization_node',
+            name='localization_node',
+            output='screen',
+            parameters=[{'use_sim_time': True}],
+        ),
+        Node(
+            package='mpc_rbt_student',
+            executable='keyboard_control',
+            name='keyboard_control',
+            output='screen',
+            prefix='xterm -e',
+        ),
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            arguments=['-d', rviz_config_path],
+            output='screen',
+            parameters=[{'use_sim_time': True}],
+        ),
     ])
