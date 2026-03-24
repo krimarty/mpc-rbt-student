@@ -23,6 +23,10 @@ private:
     rclcpp::TimerBase::SharedPtr timer_;
 
     struct termios old_termios_;
+
+    double robot_speed_;
+
+    rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr param_callback_handle_;
 };
 
 #endif // KEYBOARDCONTROL_HPP

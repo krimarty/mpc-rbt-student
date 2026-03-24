@@ -8,6 +8,22 @@ using namespace std::chrono_literals;
 
 KeyboardControlNode::KeyboardControlNode(): rclcpp::Node("keyboard_control_node") {
 
+    this->declare_parameter("robot_speed", 1.0);
+    robot_speed_ = this->get_parameter("robot_speed").as_double();
+
+    param_callback_handle_ = this->add_on_set_parameters_callback(
+        [this](const std::vector<rclcpp::Parameter> & params) {
+            rcl_interfaces::msg::SetParametersResult result;
+            result.successful = true;
+            for (const auto & param : params) {
+                if (param.get_name() == "robot_speed") {
+                    robot_speed_ = param.as_double();
+                    RCLCPP_INFO(get_logger(), "robot_speed changed to %.2f", robot_speed_);
+                }
+            }
+            return result;
+        });
+
     twist_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
     
     timer_ = this->create_wall_timer(10ms, std::bind(&KeyboardControlNode::timerCallback, this));
@@ -20,7 +36,7 @@ KeyboardControlNode::KeyboardControlNode(): rclcpp::Node("keyboard_control_node"
     
     fcntl(STDIN_FILENO, F_SETFL, O_NONBLOCK);
     
-    RCLCPP_INFO(get_logger(), "Keyboard Control node started.");
+    RCLCPP_INFO(get_logger(), "Keyboard Control node started. Speed: %.2f", robot_speed_);
     RCLCPP_INFO(this->get_logger(), "Use Arrow Keys to control the robot. Press 'ctrl+c' to quit.");
 }
 
@@ -52,16 +68,16 @@ void KeyboardControlNode::timerCallback() {
                 if (seq[0] == '[') {
                     switch (seq[1]) {
                         case 'A':
-                            twist.linear.x = 0.5;  // up arrow
+                            twist.linear.x = robot_speed_;  // up arrow
                             break;
                         case 'B':
-                            twist.linear.x = -0.5; // down arrow
+                            twist.linear.x = -robot_speed_; // down arrow
                             break;
                         case 'C':
-                            twist.angular.z = -0.5; // right arrow
+                            twist.angular.z = -robot_speed_; // right arrow
                             break;
                         case 'D':
-                            twist.angular.z = 0.5;  // left arrow
+                            twist.angular.z = robot_speed_;  // left arrow
                             break;
                     }
                 }
