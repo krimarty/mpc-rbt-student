@@ -7,6 +7,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "nav_msgs/msg/occupancy_grid.hpp"
+#include "nav_msgs/msg/path.hpp"
 #include "nav_msgs/srv/get_map.hpp"
 #include "nav_msgs/srv/get_plan.hpp"
 
@@ -47,6 +48,7 @@ private:
 
     // Data
     nav_msgs::msg::OccupancyGrid map_;
+    nav_msgs::msg::OccupancyGrid dilated_map_;
     nav_msgs::msg::Path path_;
 };
 
