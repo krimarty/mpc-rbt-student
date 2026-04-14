@@ -32,6 +32,13 @@ def generate_launch_description():
             prefix='xterm -e',
         ),
         Node(
+            package='mpc_rbt_student',
+            executable='motion_control_node',
+            name='motion_control_node',
+            output='screen',
+            parameters=[{'use_sim_time': True}],
+        ),
+        Node(
             package='rviz2',
             executable='rviz2',
             name='rviz2',

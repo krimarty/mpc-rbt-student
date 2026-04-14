@@ -28,6 +28,7 @@ class MotionControlNode : public rclcpp::Node {
         void checkCollision();
         void updateTwist();
         void execute();
+        geometry_msgs::msg::Point getTarget(double L);
             
         // Callbacks
         rclcpp_action::GoalResponse navHandleGoal(const rclcpp_action::GoalUUID & uuid, std::shared_ptr<const nav2_msgs::action::NavigateToPose::Goal> goal);
@@ -59,6 +60,7 @@ class MotionControlNode : public rclcpp::Node {
         geometry_msgs::msg::PoseStamped current_pose_;
         geometry_msgs::msg::PoseStamped goal_pose_;
         sensor_msgs::msg::LaserScan laser_scan_;
+        bool heading_aligned_ = false;
     };
 
 
